@@ -136,7 +136,14 @@ public class Clustering{
      */
     public double wc() {
         double som = 0.0 ;
-        // A COMPLETER
+        for(int i=0;i<k;i++){
+        	double compacite = 0;
+        	int taille = lesClusters[i].size();
+        	for(int j = 0;j<taille;j++){
+        		compacite += this.distance.valeur(lesCentres[i], lesClusters[i].get(j));
+        	}
+        	som += compacite;
+        }
         return som ;
     }
 
@@ -146,7 +153,11 @@ public class Clustering{
      */
     public double bc(){
         double som = 0.0 ;
-        // A COMPLETER
+        for(int i = 0;i<k;i++){
+        	for(int j = i;j<k;j++){
+        		som+= this.distance.valeur(lesCentres[i], lesCentres[j]);
+        	}
+        }
         return som ;
     }
   
