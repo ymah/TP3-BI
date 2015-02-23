@@ -1,5 +1,8 @@
 package clustering ;
+import java.util.Iterator;
 import java.util.Random ;
+
+import sun.awt.geom.AreaOp.AddOp;
 
 /**
  * L'algorithme de clustering, méthode des k-means.
@@ -82,20 +85,47 @@ public class Clustering{
   
     // on choisit (pseudo-)aléatoirement k centres pour commencer l'algo.
     private void choisirCentres(){
-        // A COMPLETER
+    	int dimension = this.lesDonnees.nbDimensions();
+    	
+    	for(int i = 0;i<k;i++){
+    		double[] valeurs= new double[dimension];
+    		for(int j = 0;j<dimension;j++){
+    			valeurs[j] = hasard.nextDouble();
+    		}
+    		Donnee unCentre = new Donnee(valeurs);
+    		lesCentres[i] = unCentre;
+    	}
     }
   
     // on change les centres en prenant les barycentres des clusters.
     // à faire après chaque étape
     private void nouveauxCentres(){
-        // A COMPLETER
+    	for(int i = 0;i<k;i++){
+    		lesCentres[i] = lesClusters[i].moyenne();
+    	}
     }
   
     // une étape : on calcule la distance de chaque donnée par rapport aux centres des clusters
     // et on place chaque donnée dans le cluster dont le centre est le plus proche
-    private boolean etape(){
+    private boolean etape() throws ClusterException{
         boolean change = false ;
-        // A COMPLETER
+        Iterator<Donnee> iterateurDonnee = this.lesDonnees.iterator();
+        int indexCentreLePlusProche = 0;
+        while(iterateurDonnee.hasNext()){
+        	Donnee laDonnee = iterateurDonnee.next();
+        	double distanceMin = this.distance.valeur(laDonnee, this.lesCentres[0]);
+        	for (int i=1; i<k; i++){
+        		double distanceI = this.distance.valeur(lesDonnees.get(i), this.lesCentres[i]);
+        		if (distanceI < distanceMin){
+        			distanceMin = distanceI;
+        			indexCentreLePlusProche = i;
+        		}
+        	}
+        	if(!lesClusters[indexCentreLePlusProche].contains(laDonnee)){
+        		lesClusters[indexCentreLePlusProche].add(laDonnee);
+        		change = true;
+        	}
+        }         
         return change ; // renvoie true ssi au moins une donnee a change de cluster
     }
 
@@ -125,8 +155,9 @@ public class Clustering{
      * On applique l'algo des k-means
      * @param trace boolean qui permet de demander (ou pas) d'avoir une trace des étapes de l'algorithme. A eviter s'il y a beaucoup de données !
      * @return le tableau des k Clusters résultat de l'application de l'algorithme.
+     * @throws ClusterException 
      */
-    public Cluster[] algo(boolean trace){
+    public Cluster[] algo(boolean trace) throws ClusterException{
         boolean change = true ;
         if (trace) {
             System.out.println("données avant le clustering : "); 
@@ -134,8 +165,7 @@ public class Clustering{
             System.out.println("Application du clustering : "); 
         }
         while (change) {
-            // l'instruction ci-dessous est A REMPLACER par l'algo
-            change=false ;
+            change = etape();
         }
         return this.lesClusters ;
     }
@@ -151,7 +181,7 @@ public class Clustering{
         double bc = this.bc();
         double rapport ;
         try{ rapport = bc/wc ;}
-        catch(java.lang.ArithmeticException e){ rapport = 0.0 ; }
+        catch(ArithmeticException e){ rapport = 0.0 ; }
         System.out.println("WC = "+wc+" BC = "+bc+" Rapport BC/WC = "+rapport);
         System.out.println("--------------------");
     }
