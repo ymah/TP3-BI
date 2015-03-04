@@ -1,5 +1,9 @@
 package clustering ;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *  Cluster, dans un algorithme de clustering de type K-mean. 
  * Un cluster contient des données, et un certain nombre de statistiques sur ces données.
@@ -9,7 +13,7 @@ package clustering ;
  */
 public class Cluster implements java.lang.Iterable<Donnee>{
 
-    private java.util.List<Donnee> data = new java.util.LinkedList<Donnee>() ; // les données du cluster
+    private List<Donnee> data = new LinkedList<Donnee>() ; // les données du cluster
     private int dimDonnee ; // la dimension de chaque donnee
     private double[] min ; // tableau ayant pour taille la dimension des données, contient le min de chaque dimension
     private double[] max ; // idem pour max
@@ -36,7 +40,7 @@ public class Cluster implements java.lang.Iterable<Donnee>{
      * comme son nom l'indique, permet d'obtenir un itérateur sur les données.
      * @return un iterateur sur les données du cluster.
      */
-    public java.util.Iterator<Donnee> iterator(){
+    public Iterator<Donnee> iterator(){
         return this.data.iterator() ;
     }
 
