@@ -6,7 +6,12 @@ package clustering ;
  * @author  Anne-Cécile Caron
  */
 public class ClusterException extends Exception {
-  public ClusterException(String m){
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6958061684124721066L;
+
+public ClusterException(String m){
     super(m);
   }
 }

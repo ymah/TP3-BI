@@ -2,8 +2,6 @@ package clustering ;
 import java.util.Iterator;
 import java.util.Random ;
 
-import sun.awt.geom.AreaOp.AddOp;
-
 /**
  * L'algorithme de clustering, méthode des k-means.
  * On applique l'algorithme sur des données placées initialement dans 1 cluster, et que l'on va répartir dans k clusters.
@@ -122,8 +120,10 @@ public class Clustering{
         		}
         	}
         	if(!lesClusters[indexCentreLePlusProche].contains(laDonnee)){
+        		lesClusters[laDonnee.numCluster()].remove(laDonnee);//ajout de la suppression de la donnée de son clsuter actuel
         		lesClusters[indexCentreLePlusProche].add(laDonnee);
         		change = true;
+        		this.nouveauxCentres();//ajout du calcul des nouveaux centres
         	}
         }         
         return change ; // renvoie true ssi au moins une donnee a change de cluster
