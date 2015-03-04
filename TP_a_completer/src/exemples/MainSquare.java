@@ -1,5 +1,6 @@
 package exemples ;
 import clustering.*;
+
 import java.io.*;
 
 public class MainSquare{
@@ -57,7 +58,7 @@ public class MainSquare{
         }
     }
   
-    public static void main(String argv[]) {
+    public static void main(String argv[]) throws ClusterException {
         if (argv.length < 2) {
             System.out.println("il faut deux parametres, le fichier et le nombre de clusters.");
             System.out.println("Par exemple : java -cp ./classes exemples.MainSquare square1.data 4") ;

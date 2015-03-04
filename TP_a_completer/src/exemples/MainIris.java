@@ -1,5 +1,6 @@
 package exemples ;
 import clustering.*;
+
 import java.io.*;
 
 public class MainIris{
@@ -74,7 +75,7 @@ public class MainIris{
         System.out.println("--> Détail : "+nbSetosa+" iris setosa, "+nbVersicolor+" iris versicolor, "+nbVirginica+" iris virginica");
     }
   
-   public static void main(String argv[]) {
+   public static void main(String argv[]) throws ClusterException {
         if (argv.length < 2) {
             System.out.println("il faut deux parametres, le fichier et le nombre de clusters.");
             System.out.println("Par exemple : java -cp ./classes exemples.MainIris iris.arff 3") ;
