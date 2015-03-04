@@ -65,7 +65,9 @@ public class Cluster implements java.lang.Iterable<Donnee>{
         this.ok = false ; // il faudra (re)calculer les ecarts types
         this.premiereDonnee = false ;
     }
-
+    public boolean contains(Donnee d){
+    	return this.data.contains(d);
+    }
     /**
      * permet de récupérer la ième donnée (ici, on voit le cluster comme une liste).
      * Attention, l'implémentation du cluster est basée sur une liste chaînée, donc cette méthode n'est pas efficace.
