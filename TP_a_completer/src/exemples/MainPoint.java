@@ -12,7 +12,7 @@ public class MainPoint{
       return t;
      }
   
-    public static void main(String argv[]) throws ClusterException{
+    public static void main(String[] argv) throws ClusterException{
        Cluster lesDonnees ;
        Donnee[] lesCentres ;
       // on crée un  tableau pour les centres.

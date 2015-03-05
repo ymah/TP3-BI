@@ -17,9 +17,9 @@ public class MainSquare{
         BufferedReader ficTexte;
         try {
             ficTexte = new BufferedReader(new FileReader(new File(fichier)));
-            if (ficTexte == null) {
+            /*if (ficTexte == null) {
                 throw new FileNotFoundException("Fichier non trouvé: " + fichier);
-            }
+            }*/
             do {
                 ligne = ficTexte.readLine();
                 if (ligne != null) {
