@@ -88,11 +88,12 @@ public class Clustering{
 	private void choisirCentres(){
 		int dimension = this.lesDonnees.nbDimensions();
 		Donnee max = this.lesDonnees.max();
+		Donnee min = this.lesDonnees.min();
 		System.out.println(max);
 		for(int i = 0;i<k;i++){
 			double[] valeurs = new double[dimension];
 			for(int j = 0;j<dimension;j++){
-				valeurs[j] = hasard.nextDouble()*max.getValeurs()[j];
+				valeurs[j] = min.getValeurs()[j] +(max.getValeurs()[j]-min.getValeurs()[j])*this.hasard.nextDouble();
 			}
 			Donnee unCentre = new Donnee(valeurs);
 			lesCentres[i] = unCentre;
@@ -109,8 +110,8 @@ public class Clustering{
 		for(int i = 0;i<k;i++){
 			lesCentres[i] = lesClusters[i].moyenne();
 		}
-			System.out.println("Coordonnees des nouveaux centres :");
-			for (int l=0; l<lesCentres.length; l++){
+		System.out.println("Coordonnees des nouveaux centres :");
+		for (int l=0; l<lesCentres.length; l++){
 			System.out.println(lesCentres[l]);
 		}
 	}
@@ -125,18 +126,13 @@ public class Clustering{
 		int indexCentreLePlusProche = 0;
 		while(iterateurDonnee.hasNext()){
 			Donnee laDonnee = iterateurDonnee.next();
-			double distanceMin = this.distance.valeur(laDonnee, this.lesCentres[0]);
-		/**	for (int i=1; i<k; i++){
-				for (int j=0; j<this.lesCentres.length; j++){
-					double distanceI = this.distance.valeur(lesDonnees.get(i), this.lesCentres[j]);
-					if (distanceI < distanceMin){
-						distanceMin = distanceI;
-						indexCentreLePlusProche = i;
-					}
-				}
-			}*/
+			//double distanceMin = this.distance.valeur(laDonnee, this.lesCentres[0]);
+		
 			for (int j=0; j<this.lesCentres.length; j++){
-				double distanceAuCentre = this.distance.valeur(laDonnee, this.lesCentres[j]);
+	
+				laDonnee.evalueChangementCluster(this.lesCentres[j], j, this.lesClusters, this.distance);
+				change |= laDonnee.aChangeDeCluster();
+			/*	double distanceAuCentre = this.distance.valeur(laDonnee, this.lesCentres[j]);
 				if (distanceAuCentre < distanceMin){
 					distanceMin = distanceAuCentre;
 					indexCentreLePlusProche = j;
@@ -147,12 +143,13 @@ public class Clustering{
 					lesClusters[laDonnee.numCluster()].remove(laDonnee);//ajout de la suppression de la donnée de son clsuter actuel
 					lesClusters[indexCentreLePlusProche].add(laDonnee);
 				}
-				catch (ArrayIndexOutOfBoundsException e){
+				catch (Exception e){
 					lesClusters[indexCentreLePlusProche].add(laDonnee);
+					laDonnee.set;
 				}
 				change = true;
-			}
-			
+		*/	}
+
 		}  
 		if (change){
 			System.out.println("Taille des clusters");
